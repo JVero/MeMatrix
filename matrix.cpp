@@ -41,8 +41,8 @@ matrix<T> matrix<T>::operator+(const matrix &right) const {
   assert(this->r == right.r && this->c == right.c);
   //matrix ret(*this);
   matrix ret(this->r, this->c);
-
-  // Not using iterators because I need the indices, in addition to the values
+  // Not using iterators because I need the indices, 
+  // in addition to the values
   for (auto i = 0; i < this->r; ++i) {
     for (auto j = 0; j < this->c; ++j) {
       *(ret[i][j]) = (*this)[i][j] + right[i][j];
@@ -55,7 +55,8 @@ template<typename T>
 matrix<T> matrix<T>::operator-(const matrix &right) const {
   assert(this->r == right.r && this->c == right.c);
   matrix ret(*this);
-  // Not using iterators because I need the indices, in addition to the values
+  // Not using iterators because I need the indices,
+  // in addition to the values
   for (auto i = 0; i < this->r; ++i) {
     for (auto j = 0; j < this->c; ++j) {
       ret[i][j] = this->values[i][j] - right[i][j];

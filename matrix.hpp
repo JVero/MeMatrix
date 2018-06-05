@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <assert.h> 
 
@@ -6,7 +8,7 @@ struct row {
   int r;
   int c;
   row<T>(int r, int c, std::vector<T> &data) : r(r), c(c), data(data){};
-  *T operator[](int val){ return *data[r*c + val]; }
+  T operator[](int val){ return data[r*c + val]; }
   private:
      std::vector<T> *data;
   public:
@@ -15,9 +17,11 @@ struct row {
 template<typename T>
 class matrix {
 public:
-  matrix();
-  matrix(const matrix &mat);
-  matrix(int rows, int columns);
+  matrix(); // Default constructor
+  matrix(const matrix &mat); // Default Copy
+  matrix(int rows, int columns); // Initializes zero matrix
+
+  // Defined operator overflows
   matrix operator+(const matrix &right) const;
   matrix operator+(const int &val) const;
 
