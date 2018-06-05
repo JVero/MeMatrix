@@ -1,64 +1,55 @@
+
 #include "matrix.hpp"
-#include <iostream>
 #include <vector>
 
-// empty matrix
-template<typename T>
-matrix<T>::matrix(int rows, int columns)
-    : r(rows), c(columns),
-      values(std::vector<T>(rows*columns, 0)){
-      std::cout << "Vector initialized with " << rows << " rows and " << columns
-       << " columns." << std::endl;
-};
+// Default constructor
+template <typename T>
+matrix<T>::matrix()
+    : r(3)
+    , c(3)
+    , std::vector<T>(9, 0){};
 
-template<typename T>
-matrix<T>::matrix(const matrix &mat) : r(mat.r), c(mat.c), values(mat.values) {}
+// Blank initializer
+template <typename T>
+matrix<T>::matrix(int r, int c)
+    : r(r)
+    , c(c)
+    , values(std::vector<T>(r * c, 0)){};
 
-template<typename T>
-T matrix<T>::get(int row, int col) { return this->values[row*c+col]; }
+// Copy constructor
+template <typename T>
+matrix<T>::matrix(matrix<T> const& old)
+    : r(old.r)
+    , c(old.c)
+    , values(old.values){};
 
-
-template<typename T>
-row<T> matrix<T>::operator[](int rw)  { return row<T>{rw, this->c,  &this->values};};
-
-template<typename T>
-matrix<T> matrix<T>::operator+(const int &val) const {
-  matrix ret(*this);
-  // Not using iterators because I need the indices, in addition to the values
-  for (auto i = 0; i < this->r; ++i) {
-    for (auto j = 0; j < this->c; ++j) {
-      ret[i] [j] = this->values[i][j] + val;
-    }
-  }
-  return ret;
+// Overload [] operator to return a "row object"
+template <typename T>
+T& matrix<T>::operator()(unsigned r, unsigned c)
+{
+    return this->values[r * c + c];
 }
 
-template<typename T>
-matrix<T> matrix<T>::operator+(const matrix &right) const {
-  assert(this->r == right.r && this->c == right.c);
-  //matrix ret(*this);
-  matrix ret(this->r, this->c);
-  // Not using iterators because I need the indices, 
-  // in addition to the values
-  for (auto i = 0; i < this->r; ++i) {
-    for (auto j = 0; j < this->c; ++j) {
-      ret[i][j] = this[i][j] + right[i][j];
+template <typename T>
+matrix<T> matrix<T>::operator+(matrix<T> right) const
+{
+    matrix<T> ret(right);
+    for (auto i = 0; i < this->r; ++i) {
+        for (auto j = 0; j < this->c; ++j) {
+            ret(i, j) += right(i, j);
+        }
     }
-  }
-  return ret;
+    return ret;
 }
 
-template<typename T>
-matrix<T> matrix<T>::operator-(const matrix &right) const {
-  assert(this->r == right.r && this->c == right.c);
-  matrix ret(*this);
-  // Not using iterators because I need the indices,
-  // in addition to the values
-  for (auto i = 0; i < this->r; ++i) {
-    for (auto j = 0; j < this->c; ++j) {
-      ret[i][j] = this->values[i][j] - right[i][j];
+template <typename T>
+matrix<T> matrix<T>::operator-(matrix<T>& right) const
+{
+    matrix<T> ret(right);
+    for (auto i = 0; i < this->r; ++i) {
+        for (auto j = 0; j < this->c; ++j) {
+            ret(i, j) -= right(i, j);
+        }
     }
-  }
-
-  return ret;
+    return ret;
 }
