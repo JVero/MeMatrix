@@ -11,7 +11,6 @@ struct row {
   T operator[](int val){ return data[r*c + val]; }
   private:
      std::vector<T> *data;
-  public:
 };
 
 template<typename T>
@@ -31,7 +30,7 @@ public:
   matrix operator*(const matrix &right);
   matrix operator/(const matrix &right);
   
-  row<T> operator[](int rw) const ;
+  row<T> operator[](int rw)  ;
 
   T get(int r, int c);
   int rows() { return r; }
