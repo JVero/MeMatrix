@@ -23,7 +23,6 @@ matrix<T>::matrix(matrix<T> const& old)
     , c(old.c)
     , values(old.values){};
 
-// Overload [] operator to return a "row object"
 template <typename T>
 T& matrix<T>::operator()(unsigned r, unsigned c)
 {
