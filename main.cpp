@@ -18,7 +18,11 @@ matrix<int> test_mat_add() {
 int main() {
 	test_mat_add();
 	auto m = matrix<int>(4,4);
+	m(1, 0) += 4;
+	
+	auto n = m + m;
+	auto k = m - n;
 	std::cout << "\n";
-	std:: cout << m[1][0] << std::endl;
+	std:: cout << m(1, 0) << std::endl;
 	return 0;
 }
