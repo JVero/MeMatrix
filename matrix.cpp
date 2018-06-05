@@ -11,7 +11,7 @@ matrix<T>::matrix()
 
 // Blank initializer
 template <typename T>
-matrix<T>::matrix(int r, int c)
+matrix<T>::matrix(unsigned r, unsigned c)
     : r(r)
     , c(c)
     , values(std::vector<T>(r * c, 0)){};
@@ -27,6 +27,7 @@ matrix<T>::matrix(matrix<T> const& old)
 template <typename T>
 T& matrix<T>::operator()(unsigned r, unsigned c)
 {
+    assert(r <= this->r && c <= this->c);
     return this->values[r * c + c];
 }
 
