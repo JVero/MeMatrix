@@ -1,62 +1,30 @@
+
 #include "matrix.hpp"
-#include <iostream>
-#include <vector>
+#include<vector>
+#include<memory>
 
-// empty matrix
 template<typename T>
-matrix<T>::matrix(int rows, int columns)
-    : r(rows), c(columns),
-      values(std::vector<T>(rows*columns, 0)){
-      std::cout << "Vector initialized with " << rows << " rows and " << columns
-       << " columns with 0s." << std::endl;
-};
+matrix<T>::matrix(): r(3), c(3), std::vector<T>(9, 0) {};
 
-// Copy constructor
 template<typename T>
-matrix<T>::matrix(const matrix &mat) : r(mat.r), c(mat.c), values(mat.values) {}
+matrix<T>::matrix(int r, int c): r(r), c(c), values(std::vector<T>(r*c, 0)){};
 
-// Subproblem of 2d indexing.
 template<typename T>
-row<T> matrix<T>::operator[](int rw)  { return row<T>{rw, this->c,  this->values};};
+matrix<T>::matrix(matrix<T> const&old): r(old.r), c(old.c), values(old.values) {};
 
-// Overload
 template<typename T>
-matrix<T> matrix<T>::operator+( int &val)  {
-  matrix ret(*this);
-  // Not using iterators because I need the indices, in addition to the values
-  for (auto i = 0; i < this->r; ++i) {
-    for (auto j = 0; j < this->c; ++j) {
-      ret[i] [j] = this->values[i][j] + val;
-    }
-  }
-  return ret;
+row<T>& matrix<T>::operator[](int r) {
+	row<T> rw(r, this->c, this->values);
+	return rw;
 }
 
 template<typename T>
-matrix<T> matrix<T>::operator+( matrix &right)  {
-  assert(this->r == right.r && this->c == right.c);
-  matrix ret(*this);
-  // Not using iterators because I need the indices, 
-  // in addition to the values
-  for (auto i = 0; i < this->r; ++i) {
-    for (auto j = 0; j < this->c; ++j) {
-      ret[i][j] += right[i][j];
-    }
-  }
-  return ret;
-}
-
-template<typename T>
-matrix<T> matrix<T>::operator-( matrix &right) const {
-  assert(this->r == right.r && this->c == right.c);
-  matrix ret(*this);
-  // Not using iterators because I need the indices,
-  // in addition to the values
-  for (auto i = 0; i < this->r; ++i) {
-    for (auto j = 0; j < this->c; ++j) {
-      ret[i][j] = this->values[i][j] - right[i][j];
-    }
-  }
-
-  return ret;
+matrix<T> matrix<T>::operator+(matrix<T> right){
+	matrix<T> ret(right);
+	for (auto i = 0; i < this->r; ++i) {
+	  for (auto j = 0; j < this->c; ++j) {
+	    ret[i][j] += right[i][j];
+	  }
+	}
+	return ret;
 }

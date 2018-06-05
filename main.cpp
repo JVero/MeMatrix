@@ -2,7 +2,7 @@
  * This file is a proxy for a test-file.  I have not used any testing library yet
  */
 
-
+#include <iostream>
 #include "matrix.cpp"
 
 void test_mat_init() {
